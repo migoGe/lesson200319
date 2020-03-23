@@ -1,0 +1,42 @@
+# Quick Sort implementation
+import random
+import numpy as np
+import timeit
+
+start = timeit.default_timer()
+
+
+def partition(sort_list, low, high):
+    i = (low - 1)
+    pivot = sort_list[high]
+    for j in range(low, high):
+        if sort_list[j] <= pivot:
+            i += 1
+            sort_list[i], sort_list[j] = sort_list[j], sort_list[i]
+    sort_list[i+1], sort_list[high] = sort_list[high], sort_list[i+1]
+    return (i+1)
+
+
+def quick_sort(sort_list, low, high):
+    if low < high:
+        pi = partition(sort_list, low, high)
+        quick_sort(sort_list, low, pi-1)
+        quick_sort(sort_list, pi+1, high)
+
+
+lst = random.sample(range(1, 1000001), 1000000)
+
+# lst = np.random.random_integers(20, size=(10000))
+# lst = []
+# size = int(input("Enter size of the list: "))
+# for i in range(size):
+#     elements = int(input("Enter an element"))
+#     lst.append(elements)
+low = 0
+high = len(lst) - 1
+quick_sort(lst, low, high)
+# print(lst)
+
+stop = timeit.default_timer()
+
+print('Time: ', stop - start)
